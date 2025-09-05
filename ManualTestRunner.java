@@ -1,4 +1,4 @@
-import DataModels.*;
+    import DataModels.*;
 import DecoratorPattern.*;
 import FactoryMethodPattern.*;
 import ObserverPattern.*;
@@ -42,27 +42,21 @@ public class ManualTestRunner {
 
         // "ห่อ" ด้วยบริการห่อของขวัญ
         Shipment giftWrapped = new GiftWrapDecorator(standardShipment);
-        System.out.println("Decorated: " + fullyLoaded.getInfo());
+        System.out.println("Decorated: " + giftWrapped.getInfo() + ", Cost: " + giftWrapped.getCost());
 
         //"ห่อ" ด้วยบริการประกันสินค้า
         Shipment fullyLoaded = new InsuranceDecorator(giftWrapped, myOrder);
-        System.out.println("Decorated: " + fullyLoaded.getInfo());
+        System.out.println("Fully Decorated: " + fullyLoaded.getInfo() + ", Cost: " + fullyLoaded.getCost());
+
+        System.out.println("\n--- 4. Printing Final Summary ---");
+        double finalPrice = priceAfterPercentage; // สมมติว่าใช้ส่วนลด 10%
+        double totalCost = finalPrice + fullyLoaded.getCost();
+        System.out.println("Final price after discount: " + finalPrice);
+        System.out.println("Final shipment cost: " + fullyLoaded.getCost());
+        System.out.println("TOTAL TO PAY: " + totalCost);
 
 
-        // --- 5. Final Order Summary ---
-        System.out.println("\n--- 5. Final Order Summary ---");
-        // เราจะใช้ราคาสินค้าหลังหักส่วนลด 10% มาคำนวณยอดสุดท้าย
-        double finalProductPrice = priceAfterPercentage; 
-        double finalShipmentCost = decoratedShipment.getCost();
-        double grandTotal = finalProductPrice + finalShipmentCost;
-        
-        System.out.println("Final Product Price: " + String.format("%,.2f", finalProductPrice) + " THB");
-        System.out.println("Final Shipment Cost: " + String.format("%,.2f", finalShipmentCost) + " THB");
-        System.out.println("----------------------------------------");
-        System.out.println("Grand Total: " + String.format("%,.2f", grandTotal) + " THB");
-
-
-        // --- 6. Testing Observer Pattern (Processing Order) ---
+        // --- 5. Testing Observer Pattern (Processing Order) ---
         orderProcessor.processOrder(myOrder);
     }
 
