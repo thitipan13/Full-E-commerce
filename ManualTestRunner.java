@@ -40,13 +40,13 @@ public class ManualTestRunner {
         Shipment standardShipment = shipmentFactory.createShipment("STANDARD");
         System.out.println("Base Shipment : " + standardShipment.getInfo() + " Cost: " + standardShipment.getCost());
 
-        // "ห่อ" ด้วยบริการห่อสินค้า
-        Shipment fullyLoaded = new InsuranceDecorator(standardShipment);
+        // "ห่อ" ด้วยบริการห่อของขวัญ
+        Shipment giftWrapped = new GiftWrapDecorator(standardShipment);
         System.out.println("Decorated: " + fullyLoaded.getInfo());
 
         //"ห่อ" ด้วยบริการประกันสินค้า
-        System.out.println("Decorated Shipment Info: " + decoratedShipment.getInfo());
-        System.out.println("Final Shipment Cost (with services): " + String.format("%,.2f", decoratedShipment.getCost()));
+        Shipment fullyLoaded = new InsuranceDecorator(giftWrapped, myOrder);
+        System.out.println("Decorated: " + fullyLoaded.getInfo());
 
 
         // --- 5. Final Order Summary ---
@@ -65,4 +65,5 @@ public class ManualTestRunner {
         // --- 6. Testing Observer Pattern (Processing Order) ---
         orderProcessor.processOrder(myOrder);
     }
+
 }
